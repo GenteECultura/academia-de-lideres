@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Fórum de Discussão</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 15px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        textarea, input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .post {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .autor {
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        .texto {
+            margin: 10px 0;
+        }
+
+        .imagem-post {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+        .curtidas {
+            margin-top: 10px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>📣 Fórum de Discussão</h1>
+
+    <!-- Formulário de nova postagem -->
+    <form action="{{ url_for('postar') }}" method="POST" enctype="multipart/form-data">
+        <label for="texto">Compartilhe algo com sua turma:</label>
+        <textarea name="texto" id="texto" rows="4" placeholder="Digite sua mensagem aqui..." required></textarea>
+
+        <label for="imagem">Adicionar imagem (opcional):</label>
+        <input type="file" name="imagem" id="imagem" accept="image/*">
+
+        <button type="submit"><i class="fas fa-paper-plane"></i> Publicar</button>
+    </form>
+
+    <!-- Exibir postagens -->
+    {% if postagens %}
+        {% for post in postagens %}
+        <div class="post">
+            <p class="autor">👤 {{ post.autor_nome }}</p>
+            <p class="texto">{{ post.texto }}</p>
+
+            {% if post.imagem_url %}
+            <img src="{{ post.imagem_url }}" class="imagem-post">
+            {% endif %}
+
+            <p class="curtidas">❤️ {{ post.curtidas }} curtidas</p>
+
+            <form action="{{ url_for('curtir', post_id=post.id) }}" method="post">
+                <button type="submit">Curtir</button>
+            </form>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>🚫 Nenhuma postagem encontrada.</p>
+    {% endif %}
+
+</body>
+</html>

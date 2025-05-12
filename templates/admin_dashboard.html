@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin | Academia de Excelência</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body { margin: 0; font-family: 'Montserrat', sans-serif; background: #f5f7fa; color: #333; }
+        .dashboard-container { display: grid; grid-template-columns: 250px 1fr; min-height: 100vh; }
+        .sidebar { background: #2c3e50; color: white; padding: 2rem 1rem; }
+        .profile { text-align: center; margin-bottom: 2rem; }
+        .profile-img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid #3498db; }
+        .profile h2 { font-size: 1.2rem; margin-top: 1rem; }
+        .nav-menu { list-style: none; padding: 0; }
+        .nav-link { display: flex; align-items: center; padding: 0.8rem 1rem; color: white; text-decoration: none; border-radius: 5px; transition: 0.3s; }
+        .nav-link i { margin-right: 10px; }
+        .nav-link:hover, .nav-link.active { background-color: #3498db; }
+        .main-content { padding: 2rem; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .page-title { font-size: 1.8rem; font-weight: 600; color: #2c3e50; }
+        .cards-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+        .card { background: white; border-radius: 10px; padding: 1.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); }
+        .card-header { display: flex; justify-content: space-between; margin-bottom: 1rem; }
+        .card-title { font-size: 1.1rem; font-weight: 500; }
+        .card-icon { width: 40px; height: 40px; border-radius: 50%; background: rgba(52,152,219,0.1); display: flex; justify-content: center; align-items: center; color: #3498db; }
+        .card-value { font-size: 2rem; font-weight: 700; }
+        .action-buttons { margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap; }
+        .action-btn { padding: 0.8rem 1.5rem; background: #3498db; color: white; border: none; border-radius: 5px; font-weight: 500; cursor: pointer; text-decoration: none; }
+        .btn-projects { background-color: #27ae60; }
+        .btn-forum { background-color: #c0392b; }
+    </style>
+</head>
+<body>
+<div class="dashboard-container">
+    <aside class="sidebar">
+        <div class="profile">
+            <img src="{{ foto_usuario }}" alt="Foto do admin" class="profile-img">
+            <h2>{{ nome_usuario }}</h2>
+            <p>Administrador</p>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="/admin/dashboard" class="nav-link active"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="/admin/corrigir_projetos" class="nav-link"><i class="fas fa-folder-open"></i> Projetos dos Alunos</a></li>
+            <li><a href="/forum" class="nav-link"><i class="fas fa-comments"></i> Fórum</a></li>
+            <li><a href="/logout" class="nav-link"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <div class="header">
+            <h1 class="page-title">Painel do Administrador</h1>
+        </div>
+
+        <div class="cards-container">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Projetos Enviados</h3>
+                    <div class="card-icon"><i class="fas fa-paper-plane"></i></div>
+                </div>
+                <div class="card-value">{{ total_projetos }}</div>
+                <p>Projetos aguardando correção</p>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Publicações</h3>
+                    <div class="card-icon"><i class="fas fa-comment-dots"></i></div>
+                </div>
+                <div class="card-value">{{ total_posts }}</div>
+                <p>Postagens no fórum</p>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Usuários Cadastrados</h3>
+                    <div class="card-icon"><i class="fas fa-users"></i></div>
+                </div>
+                <div class="card-value">{{ total_usuarios }}</div>
+                <p>Alunos ativos na plataforma</p>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <a href="/admin/projetos" class="action-btn btn-projects"><i class="fas fa-folder-open"></i> Corrigir Projetos</a>
+            <a href="/forum" class="action-btn btn-forum"><i class="fas fa-edit"></i> Gerenciar Fórum</a>
+        </div>
+    </main>
+</div>
+</body>
+</html>

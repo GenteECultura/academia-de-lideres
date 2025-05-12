@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Enviar Projeto | Academia de Excelência</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #f5f7fa;
+      color: #333;
+      margin: 0;
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 700px;
+      background: white;
+      margin: auto;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      color: #2c3e50;
+      margin-bottom: 1.5rem;
+    }
+
+    form label {
+      font-weight: 600;
+      display: block;
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    form input[type="text"],
+    form textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    form textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .file-upload {
+      margin-top: 1rem;
+    }
+
+    .btn-submit {
+      margin-top: 1.5rem;
+      padding: 0.8rem 1.5rem;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .btn-submit:hover {
+      background-color: #2980b9;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 2rem;
+      color: #3498db;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>📤 Enviar Novo Projeto</h2>
+
+    <form action="/enviar_projeto" method="POST" enctype="multipart/form-data">
+      <label for="titulo">Título do Projeto</label>
+      <input type="text" id="titulo" name="titulo" required>
+
+      <label for="descricao">Descrição</label>
+      <textarea id="descricao" name="descricao" placeholder="Explique brevemente sobre o projeto..."></textarea>
+
+      <label for="arquivo">Arquivo do Projeto (PDF, ZIP, etc)</label>
+      <input class="file-upload" type="file" id="arquivo" name="arquivo" required>
+
+      <button type="submit" class="btn-submit"><i class="fas fa-upload"></i> Enviar Projeto</button>
+    </form>
+
+    <a class="back-link" href="/user/dashboard"><i class="fas fa-arrow-left"></i> Voltar ao painel</a>
+  </div>
+</body>
+</html>

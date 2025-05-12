@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academia de Líderes | Gentil Negócios</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Open+Sans:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <!-- BARRA DE NAVEGAÇÃO SUPERIOR -->
+    <nav class="navbar">
+        <a href="#" class="navbar-brand">
+            <img src="{{ url_for('static', filename='assets/images/logo_b.png') }}" alt="Logo Eleva" class="logo">
+        </a>
+        <div class="nav-links">
+            <a href="#home" class="nav-link">Home</a>
+            <a href="#beneficios" class="nav-link">Sobre Nós</a>
+            <a href="#metodologia" class="nav-link">Missão</a>
+            <a href="#recomendaçao" class="nav-link">Clusters</a>
+            <a href="#comunidade" class="nav-link">Metodologia</a>
+            <a href="#contato" class="nav-link">Academia de Líderes</a>
+            <a href="{{ url_for('login') }}" class="nav-link login-btn">
+                Entrar <i class="fas fa-sign-in-alt"></i>
+            </a>
+            
+
+        </div>
+    </nav>
+    
+    <!-- Hero com vídeo -->
+    <section id="home" class="hero">
+        <div class="hero-image">
+            <video autoplay muted loop playsinline>
+                <source src="{{ url_for('static', filename='videos/logo-academia.mp4') }}" type="video/mp4">
+            </video>
+        </div>
+        
+        <!-- Logo central pequena -->
+        <div class="centered-logo">
+            <img src="{{ url_for('static', filename='assets/images/academia.png') }}" alt="Logo Eleva">
+        </div>
+    </section>
+
+    <!-- Seção Descrição do Projeto -->
+    <section id="sobre" class="descricao-projeto">
+        <div class="container-descricao">
+            <!-- Coluna de Texto -->
+            <div class="texto-descricao">
+                <!-- Logo no topo -->
+                <div class="logo-container">
+                    <img src="{{ url_for('static', filename='assets/images/logo_b.png') }}" alt="Academia de Líderes" class="logo-academia">
+                </div>
+
+                <div class="destaque-valor">
+                    <i class="fas fa-bullseye"></i>
+                    <p>A <strong>Academia de Líderes</strong> é essencial para garantir que os gestores da Gentil Negócios estejam sempre alinhados à cultura e aos valores da empresa.</p>
+                </div>
+
+                <p>Um líder bem preparado sabe como desenvolver sua equipe, proporcionando crescimento profissional e pessoal para seus colaboradores.</p>
+
+                <div class="destaque-box">
+                    <h3>Impacto Direto</h3>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Feedbacks eficazes e promoções transparentes</li>
+                        <li><i class="fas fa-check-circle"></i> Decisões baseadas em mérito e desempenho</li>
+                        <li><i class="fas fa-check-circle"></i> Exemplo positivo para toda a equipe</li>
+                    </ul>
+                </div>
+
+                <p>Um gestor bem treinado se torna um exemplo para seu time, influenciando positivamente o ambiente de trabalho e promovendo uma cultura de aprendizado contínuo. A Academia de Líderes prepara esses profissionais para desenvolverem as habilidades e competências necessárias para enfrentar os desafios do ciclo de 2025, tornando-os líderes completos e prontos para qualquer situação.</p>
+            </div>
+
+            <!-- Coluna de Imagens -->
+            <div class="galeria-lateral">
+                <div class="imagem-destaque" style="background-image: url('static/assets/images/lider1.jpg');">
+                    <div class="legenda-imagem">Gestão Humanizada</div>
+                </div>
+                <div class="imagem-destaque" style="background-image: url('static/assets/images/lider2.jpg');">
+                    <div class="legenda-imagem">Desenvolvimento Contínuo</div>
+                </div>
+                <div class="imagem-destaque" style="background-image: url('static/assets/images/lider3.jpg');">
+                    <div class="legenda-imagem">Liderança 2025</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Seção Visão Gentil Negócios -->
+    <section id="visao" class="visao-gentil">
+        <div class="container-gentil">
+            <!-- Citação de Destaque -->
+            <div class="citacao-gentil">
+                <div class="aspas-top"><i class="fas fa-quote-left"></i></div>
+                <p class="texto-visao">"<b>Desenvolver e capacitar</b> líderes da Gentil para atuarem com excelência na <b>gestão de pessoas</b>, promovendo um ambiente de <b>alta performance</b>, alinhado aos <b>valores</b> da empresa, e preparado para os desafios de um mercado em constante transformação."</p>
+                <div class="aspas-bottom"><i class="fas fa-quote-right"></i></div>
+                <p class="assinatura-visao">— Missão da Academia de Líderes</p>
+            </div>
+            
+            <!-- Ícones de Valores -->
+            <div class="valores-gentil">
+                <div class="valor-item">
+                    <div class="icone-valor"><i class="fas fa-retweet"></i></div>
+                    <h3>Repetição</h3>
+                    <p>Prática consistente leva à maestria</p>
+                </div>
+                
+                <div class="valor-item">
+                    <div class="icone-valor"><i class="fas fa-chart-line"></i></div>
+                    <h3>Evolução</h3>
+                    <p>Melhoria contínua em tudo que fazemos</p>
+                </div>
+                
+                <div class="valor-item">
+                    <div class="icone-valor"><i class="fas fa-hands-helping"></i></div>
+                    <h3>Impacto</h3>
+                    <p>Transformamos vidas através do trabalho</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Clusters -->
+    <section id="clusters" class="clusters-section">
+        <div class="clusters-container">
+            <!-- Introdução -->
+            <div class="clusters-intro">
+                <h2>Nossos Clusters de Desenvolvimento</h2>
+                <p>Na Gentil Negócios, estruturamos nossa Academia de Líderes em três níveis evolutivos, cada um com objetivos e desafios específicos para impulsionar o crescimento contínuo de nossos talentos:</p>
+            </div>
+
+            <!-- Quadros dos Clusters -->
+            <div class="clusters-grid">
+                <!-- Cluster Junior -->
+                <div class="cluster-card junior">
+                    <div class="cluster-header">
+                        <i class="fas fa-seedling"></i>
+                        <h3>Junior</h3>
+                    </div>
+                    <ul class="cluster-list">
+                        <li>Desenvolvimento de habilidades fundamentais de liderança.</li>
+                        <li>Treinamento em comunicação eficaz e resolução de conflitos.</li>
+                        <li>Introdução às práticas de gestão de projetos e tomada de decisão.</li>
+                    </ul>
+                </div>
+
+                <!-- Cluster Pleno -->
+                <div class="cluster-card pleno">
+                    <div class="cluster-header">
+                        <i class="fas fa-tree"></i>
+                        <h3>Pleno</h3>
+                    </div>
+                    <ul class="cluster-list">
+                        <li>Aprimoramento de técnicas de gestão avançada.</li>
+                        <li>Desenvolvimento de habilidades de liderança situacional e coaching.</li>
+                        <li>Treinamento em gestão de mudanças e inovação organizacional</li>
+                    </ul>
+                </div>
+
+                <!-- Cluster Senior -->
+                <div class="cluster-card senior">
+                    <div class="cluster-header">
+                        <i class="fas fa-mountain"></i>
+                        <h3>Senior</h3>
+                    </div>
+                    <ul class="cluster-list">
+                        <li>Liderança transformacional e desenvolvimento de cultura organizacional.</li>
+                        <li>Estratégias de gestão de crises e tomada de decisões críticas.</li>
+                        <li>Mentoria e desenvolvimento de futuros líderes dentro da organização.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>            
+    
+    <!-- Botão para página externa - CENTRALIZADO -->
+    <div class="btn-container">
+        <a href="modulos.html" class="cta-centralizado">
+            Ver Módulos Completos
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+    <!-- Seção Benefícios & Metodologias - Versão Dark -->
+    <section id="beneficios-metodologias" class="beneficios-section dark">
+        <div class="container">
+        <div class="section-header">
+            <h2>Benefícios <span class="highlight">&</span> Metodologias</h2>
+            <p class="section-subtitle">Abordagem completa para desenvolvimento de líderes de alta performance</p>
+        </div>
+    
+        <div class="beneficios-container">
+            <!-- Card 1 -->
+            <div class="beneficio-card">
+            <div class="card-icon">
+                <i class="fas fa-network-wired"></i>
+            </div>
+            <h3>Networking Estratégico</h3>
+            <p>Conexões com líderes da Gentil Negócios para troca de experiências.</p>
+            <ul class="card-features">
+                <li><i class="fas fa-check"></i> Encontros mensais</li>
+                <li><i class="fas fa-check"></i> Grupos por área</li>
+                <li><i class="fas fa-check"></i> Eventos exclusivos</li>
+            </ul>
+            </div>
+    
+            <!-- Card 2 -->
+            <div class="beneficio-card">
+            <div class="card-icon">
+                <i class="fas fa-user-tie"></i>
+            </div>
+            <h3>Mentorias Individuais</h3>
+            <p>Sessões personalizadas para acelerar seu desenvolvimento.</p>
+            <ul class="card-features">
+                <li><i class="fas fa-check"></i> Plano individual</li>
+                <li><i class="fas fa-check"></i> Acompanhamento</li>
+                <li><i class="fas fa-check"></i> Feedbacks</li>
+            </ul>
+            </div>
+    
+            <!-- Card 3 -->
+            <div class="beneficio-card">
+            <div class="card-icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <h3>Metodologia Data-Driven</h3>
+            <p>Decisões baseadas em dados e métricas de desempenho.</p>
+            <ul class="card-features">
+                <li><i class="fas fa-check"></i> Análise de KPIs</li>
+                <li><i class="fas fa-check"></i> Relatórios</li>
+                <li><i class="fas fa-check"></i> Ajustes contínuos</li>
+            </ul>
+            </div>
+    
+            <!-- Card 4 -->
+            <div class="beneficio-card">
+            <div class="card-icon">
+                <i class="fas fa-brain"></i>
+            </div>
+            <h3>Psicologia Aplicada</h3>
+            <p>Técnicas de neurociência para desenvolvimento.</p>
+            <ul class="card-features">
+                <li><i class="fas fa-check"></i> Inteligência emocional</li>
+                <li><i class="fas fa-check"></i> Gestão de conflitos</li>
+                <li><i class="fas fa-check"></i> Tomada de decisão</li>
+            </ul>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- Seção de Depoimentos -->
+    <section class="depoimentos-section">
+        <div class="container">
+        <div class="section-header">
+            <h2>O que dizem nossos líderes</h2>
+            <p class="section-subtitle">Depoimentos de quem já passou pela Academia de Líderes</p>
+        </div>
+    
+        <div class="depoimentos-grid">
+            <!-- Depoimento 1 -->
+            <div class="depoimento-card">
+            <div class="depoimento-content">
+                <div class="quote-icon">
+                <i class="fas fa-quote-left"></i>
+                </div>
+                <p class="depoimento-texto">Aprender e compartilhar conhecimento é transformador. Na Academia de Líderes, evoluímos constantemente por meio de cursos, mentorias e trocas valiosas. Cada aprendizado amplia nossa visão e fortalece nossas habilidades. O que me motiva é levar essa evolução ao meu time, agregando valor com metodologias e insights. Acredito que o desenvolvimento contínuo é essencial para entregas estratégicas e um ambiente de aprendizado mútuo, impulsionando nosso potencial coletivo.
+                </p>
+            </div>
+            <div class="depoimento-autor">
+                <img src="{{ url_for('static', filename='assets/images/lays.jpg') }}" alt="Foto do participante" class="autor-foto">
+                <div class="autor-info">
+                <h4>Lays Nascimento</h4>
+                <p>Coordenador(a) de Obras</p>
+                </div>
+            </div>
+            </div>
+    
+            <!-- Depoimento 2 -->
+            <div class="depoimento-card">
+            <div class="depoimento-content">
+                <div class="quote-icon">
+                <i class="fas fa-quote-left"></i>
+                </div>
+                <p class="depoimento-texto">A Academia de Líderes foi super importante para o meu crescimento em 2024, oferecendo uma base sólida com ferramentas generalistas. Espero que em 2025 possa trazer cursos e treinamentos mais específicos para o varejo de beleza. Sou muito grato à Gentil Negócios por proporcionar essa plataforma de desenvolvimento para liderança.</p>
+            </div>
+            <div class="depoimento-autor">
+                <img src="{{ url_for('static', filename='assets/images/Luciano.jpg') }}" alt="Foto do participante" class="autor-foto">
+                <div class="autor-info">
+                <h4>Luciano Santos</h4>
+                <p>Gerente de Vendas e Operações</p>
+                </div>
+            </div>
+            </div>
+    
+            </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+
+    <!DOCTYPE html>
+    <html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Conheça Nosso Time</title>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    </head>
+    <body>
+        <!-- Section Hero com efeito parallax -->
+        <section class="team-hero dark-section">
+            <div class="hero-overlay"></div>
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Conheça Nosso Time</h1>
+                    <p class="hero-subtitle">Profissionais experientes comprometidos com sua evolução na liderança</p>
+                    <div class="scroll-indicator">
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+        <!-- Section Grade de Membros com hover effects -->
+        <section class="team-members dark-section">
+            <div class="container">
+                <h2 class="section-title">Nossos Especialistas</h2>
+                <p class="section-intro">Conheça os profissionais que fazem a diferença em sua jornada</p>
+                
+                <div class="team-grid">
+                    <!-- Membro 1 -->
+                    <article class="team-member dark-card">
+                        <div class="member-photo-container">
+                            <img src="{{ url_for('static', filename='assets/images/Maraya.jpg') }}" 
+                                 alt="Maraya" 
+                                 class="member-photo">
+                            <div class="photo-overlay"></div>
+                        </div>
+                        <div class="member-info">
+                            <h3 class="member-name">Maraya Silva</h3>
+                            <p class="member-role">Aprendizagem e Desenvolvimento</p>
+                            <div class="member-divider"></div>
+                            <p class="member-bio">Acredita muito na iniciativa da Academia de Líderes e no seu potencial de transformação. Cada aprendizado proporcionado fortalece quem lidera e inspira quem acompanha. Liderança se constrói com intenção e a Academia de Líderes tem total intencionalidade.</p>
+
+                        </div>
+                    </article>
+                    
+                    <!-- Membro 2 -->
+                    <article class="team-member dark-card">
+                        <div class="member-photo-container">
+                            <img src="{{ url_for('static', filename='assets/images/Janaína.jpg') }}" 
+                                 alt="Janaína - Diretor(a) de Aprendizado" 
+                                 class="member-photo">
+                            <div class="photo-overlay"></div>
+                        </div>
+                        <div class="member-info">
+                            <h3 class="member-name">Janaína Reis</h3>
+                            <p class="member-role">Gente & Cultura</p>
+                            <div class="member-divider"></div>
+                            <p class="member-bio">Janaína Reis acredita que liderar pessoas é um dos caminhos mais potentes para gerar resultados sustentáveis nos negócios. Diretora de Gente e Cultura, é movida pelo propósito de desenvolver ambientes onde as pessoas possam crescer, se conectar com o que fazem e entregar o seu melhor. Com uma atuação estratégica, apaixonada pelo desenvolvimento humano e focada em resultados, Janaina lidera iniciativas que fortalecem a cultura organizacional, impulsionam a performance dos times e tornam a empresa cada vez mais preparada para os desafios do presente e do futuro.</p>
+                        </div>
+                    </article>
+                    
+                    <!-- Membro 3 -->
+                    <article class="team-member dark-card">
+                        <div class="member-photo-container">
+                            <img src="{{ url_for('static', filename='assets/images/maria.jpg') }}" 
+                                 alt="Maria Luisa - Head de Experiência" 
+                                 class="member-photo">
+                            <div class="photo-overlay"></div>
+                        </div>
+                        <div class="member-info">
+                            <h3 class="member-name">Maria Luiza</h3>
+                            <p class="member-role">Aprendizagem e Desenvolvimento</p>
+                            <div class="member-divider"></div>
+                            <p class="member-bio">Malu acredita que a educação corporativa é uma poderosa alavanca de transformação para as pessoas e para os negócios. Como Analista de Aprendizagem e Desenvolvimento, seu papel é impulsionar o crescimento de líderes através de projetos educacionais inovadores, estratégicos e alinhados aos desafios do presente e do futuro. Com iniciativas como a Academia de Líderes, Malu contribui diretamente para o fortalecimento da cultura organizacional, promovendo uma liderança mais preparada, humana e conectada com os objetivos da empresa.</p>
+                        </div>
+                    </article>
+                    
+                    <!-- Membro 4 -->
+                    <article class="team-member dark-card">
+                        <div class="member-photo-container">
+                            <img src="{{ url_for('static', filename='assets/images/Pedro.jpg') }}" 
+                                 alt="Pedro - Líder de Mentores" 
+                                 class="member-photo">
+                            <div class="photo-overlay"></div>
+                        </div>
+                        <div class="member-info">
+                            <h3 class="member-name">Pedro Demetrius</h3>
+                            <p class="member-role">Aprendizagem e Desenvolvimento</p>
+                            <div class="member-divider"></div>
+                            <p class="member-bio">Pedro vê o Desenvolvimento Humano como um espaço vivo de transformação — onde gente cresce, se conecta e ganha clareza sobre o impacto que pode gerar. No dia a dia, seu papel em Aprendizagem e Desenvolvimento é criar experiências que façam sentido de verdade: que preparem líderes não só para entregar resultados, mas para escutar, adaptar, inspirar. Acredita que projetos de formação - Como o Eleva - precisam conversar com os desafios reais da empresa e, ao mesmo tempo, manter viva a chama da criatividade e inovação. Porque no fim das contas, formar líderes é também cuidar da cultura, da estratégia e das pessoas que sustentam tudo isso.</p>
+
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </body>
+    </html>
+
+    <!-- Seção final CTA -->
+    <section id="contato" class="black-section">
+        <div class="container">
+            <h2>Junte-se à Academia de Líderes</h2>
+            <p>Desenvolva suas habilidades de liderança com o melhor conteúdo e mentoria especializada. Garanta sua vaga agora!</p>
+            
+            <button class="cta-button">Entrar</button>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="#">Home</a>
+                <a href="#">Benefícios</a>
+                <a href="#">Metodologia</a>
+                <a href="#">Depoimentos</a>
+                <a href="#">Nosso time</a>
+            </div>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+            <div class="copyright">
+                © 2025 Academia de Líderes - Gentil Negócios. Todos os direitos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Tela Flutuante de Etapas -->
+    <div class="etapas-flutuante">
+        <div class="etapas-container">
+            <button class="fechar-etapas">&times;</button>
+            <h3>Etapas do Programa</h3>
+            <div class="etapas-navegacao">
+                <button class="etapa-btn active" data-etapa="1">1. Inscrição</button>
+                <button class="etapa-btn" data-etapa="2">2. Seleção</button>
+                <button class="etapa-btn" data-etapa="3">3. Imersão</button>
+                <button class="etapa-btn" data-etapa="4">4. Mentoria</button>
+                <button class="etapa-btn" data-etapa="5">5. Formatura</button>
+            </div>
+            <div class="etapas-conteudo">
+                <div class="etapa-conteudo active" data-etapa="1">
+                    <h4>Etapa 1: Inscrição</h4>
+                    <p>Preencha o formulário com seus dados e motivação para participar do programa. Esta etapa está aberta por tempo limitado.</p>
+                    <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Inscrição">
+                </div>
+                <div class="etapa-conteudo" data-etapa="2">
+                    <h4>Etapa 2: Seleção</h4>
+                    <p>Análise de perfil e entrevistas com nosso time de especialistas. Avaliamos potencial de liderança e alinhamento cultural.</p>
+                    <img src="https://images.unsplash.com/photo-1521791055366-0d553872125f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Seleção">
+                </div>
+                <div class="etapa-conteudo" data-etapa="3">
+                    <h4>Etapa 3: Imersão</h4>
+                    <p>Workshops intensivos com os principais líderes da empresa. Desenvolvimento de habilidades técnicas e comportamentais.</p>
+                    <img src="https://images.unsplash.com/photo-1499678329028-101435549a4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Imersão">
+                </div>
+                <div class="etapa-conteudo" data-etapa="4">
+                    <h4>Etapa 4: Mentoria</h4>
+                    <p>Acompanhamento personalizado com um profissional referência. Aplicação prática dos conhecimentos em projetos reais.</p>
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Mentoria">
+                </div>
+                <div class="etapa-conteudo" data-etapa="5">
+                    <h4>Etapa 5: Formatura</h4>
+                    <p>Cerimônia de certificação e integração ao banco de talentos. Preparação para assumir posições de liderança.</p>
+                    <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Formatura">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botão para abrir etapas -->
+    <button class="abrir-etapas-btn">
+        <i class="fas fa-map"></i> Ver Etapas
+    </button>
+
+    <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide"></script>
+    <script src="script.js"></script>
+</body>
+</html>
