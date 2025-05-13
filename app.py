@@ -77,6 +77,14 @@ def load_user(user_id):
 def home():
     return render_template('index.html')
 
+@app.route("/notas")
+def notas():
+    # Simulação de dados vindos de projetos com notas
+    projetos_com_notas = []  # Ex: [{'nome': 'Projeto 1', 'nota': 85}, {'nome': 'Projeto 2', 'nota': 92}]
+
+    return render_template("notas.html", projetos_com_notas=projetos_com_notas)
+
+
 
 @app.route('/enter')
 def enter():
@@ -142,7 +150,24 @@ def login():
 def user_dashboard():
     nome_usuario = current_user.name or current_user.username
     foto_usuario = url_for('static', filename='assets/images/foto_padrao.png')
-    return render_template('user_dashboard.html', nome_usuario=nome_usuario, foto_usuario=foto_usuario)
+
+    # Buscar projetos do usuário no Xano
+    projetos = xano_request("projetos", params={"aluno_id": current_user.id}) or []
+
+    qtd_projetos = len(projetos)
+
+    # Calcular média das notas, apenas se existirem projetos com nota
+    notas = [p.get("nota") for p in projetos if p.get("nota") is not None]
+    media_notas = round(sum(notas) / len(notas), 1) if notas else None
+
+    return render_template(
+        'user_dashboard.html',
+        nome_usuario=nome_usuario,
+        foto_usuario=foto_usuario,
+        qtd_projetos=qtd_projetos,
+        media_notas=media_notas
+    )
+
 
 
 @app.route('/admin/dashboard')

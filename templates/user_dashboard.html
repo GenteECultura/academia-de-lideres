@@ -227,7 +227,6 @@
     
     
 
-    <!-- Conteúdo Principal -->
     <main class="main-content">
       <div class="header">
         <div>
@@ -243,17 +242,16 @@
             <h3 class="card-title">Projetos Ativos</h3>
             <div class="card-icon"><i class="fas fa-tasks"></i></div>
           </div>
-          <div class="card-value">12</div>
-          <p class="card-description">+2 desde a última semana</p>
-        </div>
-
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Membros na Equipe</h3>
-            <div class="card-icon"><i class="fas fa-users"></i></div>
-          </div>
-          <div class="card-value">8</div>
-          <p class="card-description">Alta performance coletiva</p>
+          <div class="card-value">{{ qtd_projetos }}</div>
+          <p class="card-description">
+            {% if qtd_projetos == 0 %}
+              Nenhum projeto cadastrado
+            {% elif qtd_projetos == 1 %}
+              1 projeto ativo
+            {% else %}
+              {{ qtd_projetos }} projetos ativos
+            {% endif %}
+          </p>
         </div>
 
         <div class="card">
@@ -261,10 +259,23 @@
             <h3 class="card-title">Média de Desempenho</h3>
             <div class="card-icon"><i class="fas fa-star"></i></div>
           </div>
-          <div class="card-value">9.2</div>
-          <p class="card-description">Acima da média institucional</p>
+          <div class="card-value">
+            {% if media_notas is not none %}
+              {{ "%.1f"|format(media_notas) }}
+            {% else %}
+              —
+            {% endif %}
+          </div>
+          <p class="card-description">
+            {% if media_notas is not none %}
+              Avaliação geral dos seus projetos
+            {% else %}
+              Nenhuma nota registrada ainda
+            {% endif %}
+          </p>
         </div>
       </div>
+
 
       <div class="quick-actions">
         <h3 class="section-title">Ações Rápidas</h3>

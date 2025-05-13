@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Meu Desempenho | Academia de Excelência</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #f5f7fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    h1 {
+      color: #2c3e50;
+      margin-bottom: 1rem;
+      font-size: 2rem;
+    }
+
+    .no-data {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: #7f8c8d;
+    }
+
+    .no-data i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: #bdc3c7;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 2rem;
+      text-decoration: none;
+      color: #3498db;
+      font-weight: 500;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .metric-card {
+      background: #ecf0f1;
+      padding: 1.5rem;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .metric-card h2 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: #2c3e50;
+    }
+
+    .metric-card p {
+      margin: 0.5rem 0 0;
+      color: #7f8c8d;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Meu Desempenho</h1>
+
+    {% if notas and notas|length > 0 %}
+      <div class="metrics">
+        {% for nota in notas %}
+          <div class="metric-card">
+            <h2>{{ nota.valor }}%</h2>
+            <p>{{ nota.descricao }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="no-data">
+        <i class="fas fa-info-circle"></i>
+        <h3>Você ainda não possui notas cadastradas.</h3>
+        <p>Assim que suas avaliações forem corrigidas, você verá seus resultados aqui.</p>
+      </div>
+    {% endif %}
+
+    <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> Voltar ao Dashboard</a>
+  </div>
+</body>
+</html>
