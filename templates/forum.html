@@ -141,25 +141,36 @@
     </form>
 
 
-<!-- Exibir postagens -->
-{% if postagens %}
-    {% for post in postagens %}
-        <div class="post">
-            <p class="autor">👤 {{ post.autor_nome }}</p>
-            <div class="texto">{{ post.texto }}</div>
-            {% if post.video_url %}
-            <video controls class="imagem-post" style="margin-top: 10px;" preload="metadata">
-                <source src="{{ post.video_url.url if post.video_url.url is defined else post.video_url.path if post.video_url.path is defined else post.video_url }}" type="video/mp4">
-                Seu navegador não suporta o elemento de vídeo.
-            </video>
-            <small style="color: gray;">{{ post.video_url.url if post.video_url.url is defined else post.video_url }}</small>
-            {% endif %}
+    <!-- Exibir postagens -->
+    {% if postagens %}
+        {% for post in postagens %}
+            <div class="post">
+                <p class="autor">👤 {{ post.autor_nome }}</p>
+                <div class="texto">{{ post.texto }}</div>
 
-        </div>
-    {% endfor %}
-{% else %}
-    <p style="text-align: center; color: #888;">🚫 Nenhuma postagem encontrada.</p>
-{% endif %}
+                {% if post.video_url %}
+                    {% set url_video = None %}
+                    {% if post.video_url is string %}
+                        {% set url_video = post.video_url %}
+                    {% elif post.video_url.url is defined %}
+                        {% set url_video = post.video_url.url %}
+                    {% elif post.video_url.path is defined %}
+                        {% set url_video = post.video_url.path %}
+                    {% endif %}
+
+                    {% if url_video %}
+                        <video controls class="imagem-post" style="margin-top: 10px;" preload="metadata">
+                            <source src="{{ url_video }}" type="video/mp4">
+                            Seu navegador não suporta o elemento de vídeo.
+                        </video>
+                        <small style="color: gray;">{{ url_video }}</small>
+                    {% endif %}
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p style="text-align: center; color: #888;">🚫 Nenhuma postagem encontrada.</p>
+    {% endif %}
 
 
 
