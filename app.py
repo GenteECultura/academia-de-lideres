@@ -10,7 +10,7 @@ app.secret_key = os.getenv('FLASK_SECRET_KEY', 'sua_chave_secreta_aqui')
 
 # Configurações do Xano
 XANO_BASE_URL = "https://xidg-u2cu-sa8e.n7c.xano.io/api:sojjGI-P"
-XANO_API_KEY = "eyJhbGciOiJBMjU2S1ciLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwiemlwIjoiREVGIn0.xKI5gTm9mo1qgFXuJlF_nmmd1rWHFKK9K9DNAi_M1J7IaOIskPt_sbg_RC4rSj1lkGCTcuvvqUwXD8BVzLmy7l8TWGuIne0J.NG3hgfj1istY6u_ZlWsygg.QXK6GTv0BW2gMljc8hzqyt7mSc8c6GTgGWKtWepIsgJ73yFFedGLwBUIS9DFvH8xwJmEXYkjdDeyzdus9ECDKaHr5RpQyZAoBFkpxfV4eWbOhy1PrVdEKVFiFnIXh9klMmXrdGQPzLraQVOBGeW1JQ.pjntJaQpDG3nbKmHFG42ZROKqPJZ_v25k25kO_x6anc"
+XANO_API_KEY = "eyJhbGciOiJBMjU2S1ciLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwiemlwIjoiREVGIn0.dBO5lDKV3DpAEyCcvsXe9kQs6tQ-xm5ZZzh1PVeaGFjGJ-8Ng5IzZEItll1QNZuAxUXRfvd9xflfE6NGUSRGffRzcd9BiykN.seah0qvyrbHnwsI3sqgD8g.0o1ejNO5tit_2r6xQLgDVTaUR6JVEY6Gtb_6hzCrmz2CHaD4-dkXITn6rXbZanbdmBM0zVFrW8hRMQ2E92KbFBjPA_xyjmlvrcnf4kYzcHEvOq0n0tQO7SNa_2pla7FaW2Hlw8pa4dPKIZnOZVtPXQ.91lF5f07BX8VPPThyXy3C0EhBbCJiE2dWh79aS0AGuk"
 
 # Mapeamento de tabelas amigáveis
 XANO_TABLES = {
@@ -18,7 +18,8 @@ XANO_TABLES = {
     'forum_post': 'forum_post',
     'projects': 'projetos',
     'student_disciplines': 'aluno_disciplinas',
-    'professor_disciplines': 'professor_disciplinas'
+    'professor_disciplines': 'professor_disciplinas',
+    'documentos':'documentos'
 }
 
 # Login Manager
@@ -52,14 +53,17 @@ def xano_request(endpoint, method='GET', data=None, params=None, token=None):
         else:
             raise ValueError("Método HTTP não suportado")
 
-        if response.status_code == 200:
+        print(f"✅ Xano {method} {url} - Status: {response.status_code}")
+
+        if response.status_code in [200, 201]:
             return response.json()
         else:
-            print(f"Erro Xano: {response.status_code} - {response.text}")
+            print(f"❌ Erro Xano: {response.status_code} - {response.text}")
             return None
     except Exception as e:
-        print(f"Falha na requisição ao Xano: {str(e)}")
+        print(f"❌ Falha na requisição ao Xano: {str(e)}")
         return None
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -182,29 +186,63 @@ def admin_dashboard():
 @login_required
 def forum():
     posts = xano_request(XANO_TABLES['forum_post'])
+    print(f"✅ Posts retornados: {posts}")
     return render_template("forum.html", postagens=posts)
+
 
 @app.route('/postar', methods=['POST'])
 @login_required
 def postar():
     texto = request.form.get('texto')
-    imagem = request.files.get('imagem')
+    video = request.files.get('video')
+    video_url = None
 
-    imagem_url = None
-    if imagem:
-        imagem_url = f"https://meu-servidor.com/uploads/{imagem.filename}"
+    if video:
+        try:
+            files = {
+                'file': (video.filename, video.stream, video.mimetype)
+            }
+            UPLOAD_ENDPOINT = "upload_video"
+
+            upload_response = requests.post(
+                f"{XANO_BASE_URL}/{UPLOAD_ENDPOINT}",
+                files=files,
+                headers={"Authorization": f"Bearer {XANO_API_KEY}"}
+            )
+
+            if upload_response.status_code == 200:
+                video_url = upload_response.json().get('url')
+                print("✅ Vídeo enviado para o Xano:", video_url)
+            else:
+                print("❌ Erro ao enviar vídeo:", upload_response.status_code, upload_response.text)
+        except Exception as e:
+            print("❌ Exceção no envio do vídeo:", str(e))
 
     data = {
         "autor_id": current_user.id,
-        "autor_nome": current_user.name,
+        "autor_nome": current_user.name or current_user.username,
         "autor_foto": url_for('static', filename='assets/images/foto_padrao.png'),
-        "texto": texto,
-        "imagem_url": imagem_url,
+        "texto": texto or "",
+        "imagem_url": None,
+        "video_url": {
+            "path": video_url
+        } if video_url else None,
         "curtidas": 0
     }
 
-    xano_request(XANO_TABLES['forum_post'], method='POST', data=data)
+    print("📤 Enviando dados para o Xano:", data)
+
+    result = xano_request(XANO_TABLES['forum_post'], method='POST', data=data)
+    if result:
+        print("✅ Postagem criada com sucesso.")
+    else:
+        print("❌ Falha ao criar postagem.")
+
     return redirect(url_for('forum'))
+
+
+
+
 
 @app.route('/curtir/<int:post_id>', methods=['POST'])
 @login_required
@@ -242,6 +280,18 @@ def download_projeto(projeto_id):
         return "Arquivo não encontrado", 404
 
     return redirect(file_url)
+
+@app.route('/documentos')
+def documentos():
+    try:
+        response = requests.get(XANO_BASE_URL)
+        response.raise_for_status()
+        documentos = response.json()
+    except requests.RequestException as e:
+        print(f"Erro ao consultar Xano: {e}")
+        documentos = []
+    
+    return render_template('documentos.html', documentos=documentos)
 
 
 

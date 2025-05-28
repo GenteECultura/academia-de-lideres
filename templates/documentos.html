@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentos e Aulas | Academia de Excelência</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #f5f7fa;
+      color: #333;
+      padding: 2rem;
+    }
+    h1 {
+      color: #2c3e50;
+      margin-bottom: 1.5rem;
+    }
+    .document-list {
+      list-style: none;
+      padding: 0;
+    }
+    .document-list li {
+      background: white;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 5px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+    .document-list a {
+      color: #3498db;
+      text-decoration: underline;
+    }
+    .doc-icon {
+      color: #e74c3c;
+      margin-right: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Documentos e Aulas</h1>
+
+  <ul class="document-list">
+    {% for doc in documentos %}
+      <li>
+        <p><i class="fas fa-file-pdf doc-icon"></i><strong>{{ doc.titulo }}</strong></p>
+        <p>{{ doc.descricao }}</p>
+        <a href="{{ doc.arquivo_url }}" target="_blank">Visualizar PDF</a>
+      </li>
+    {% else %}
+      <li>Nenhum documento disponível no momento.</li>
+    {% endfor %}
+  </ul>
+
+  <a href="/" style="text-decoration:none;color:#3498db;">&larr; Voltar ao Dashboard</a>
+
+</body>
+</html>
