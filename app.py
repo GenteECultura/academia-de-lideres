@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+from flask import Flask, request, send_from_directory
 import os
 import requests
 from werkzeug.utils import secure_filename
@@ -7,10 +8,13 @@ from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.secret_key = os.getenv('FLASK_SECRET_KEY', 'sua_chave_secreta_aqui')
+UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
+os.makedirs(UPLOAD_FOLDER, exist_ok=True) 
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Configurações do Xano
 XANO_BASE_URL = "https://xidg-u2cu-sa8e.n7c.xano.io/api:sojjGI-P"
-XANO_API_KEY = "eyJhbGciOiJBMjU2S1ciLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwiemlwIjoiREVGIn0.nYfB2VSGVuHQT9Kd88QLG3WInisdNC5prFcVIjwjo2QW92t-ztrNp-6z3usuf_TFhRIWU9PMxAcsCzFHmmZM56yppPq5jXzw.8HrN2Dp73zT_EnB7iVhzqw.BCuSrFZ-IfzVZfHn9S3wq-WYPT2ly2-cw_6CfQRRBtOKsEuFa5AtBsWhFJSdC5kl_lv_a44_OkrY_UIfvgXDJhuuretIuA2d6NZqghLeygZAPrSAbdysS8iOs9P_vgkanfHPmfvOuj8wfpDCAoz0Vw.SafotaTKseSJkpbgx5Ht2YgGpZcK7fwOvAyxpHcux0k"
+XANO_API_KEY = "eyJhbGciOiJBMjU2S1ciLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwiemlwIjoiREVGIn0.bJKCNtOZWPzP00iDoJPCqXuln_-UUGSdC6nUU4UFg7ccBfaA6jtzrfSRUQOo2C-X0bBYUSkJTPO955mHx6ROZ58TqYkLH3Zg.DVb_D2gaFhczOwzpTn91qA.RxjfF0moyPkfQSHTxIPMr0rVpcOyUn-yYisPBkV3aI8O9N2DLr1eMt7p7KIfJ9I09uvL4FUnoPoWK_RwYQ3ESfnBuXHJChr4AHgzonJJQZ4upl8WqRhid6qbA5yRFANrgQ9MYHI8zITKlmqOnn5dWA.moIgISizXJzenerhOXCZmcrJDYA0n71fbCmU-iSAWmg"
 
 # Mapeamento de tabelas amigáveis
 XANO_TABLES = {
@@ -354,44 +358,47 @@ def enviar_projeto():
         descricao = request.form.get('descricao')
         arquivo = request.files.get('arquivo')
 
-        # Verifica se o arquivo foi enviado
-        arquivo_url = None
-        if arquivo:
-            filename = secure_filename(arquivo.filename)
-            save_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        if not arquivo:
+            flash("Você precisa enviar um arquivo.", "danger")
+            return redirect(url_for('enviar_projeto'))
 
-            # Garante que o diretório existe
-            os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+        filename = secure_filename(arquivo.filename)
+        save_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        arquivo.save(save_path)
 
-            arquivo.save(save_path)
+        # Gera a URL pública do arquivo
+        arquivo_url = url_for('serve_arquivo', filename=filename, _external=True)
 
-        # Cria o projeto no Xano (sem o arquivo_url inicialmente)
-        projeto_data = {
-            "aluno_id": current_user.id,
-            "titulo": titulo,
-            "descricao": descricao,
-            "arquivo_url": "",  # Temporário
-            "status": "Pendente"
-        }
+        # Envia para o Xano
+        response = requests.post(
+            f"{XANO_BASE_URL}/projetos",
+            headers={"Authorization": f"Bearer {XANO_API_KEY}"},
+            json={
+                "aluno_id": current_user.id,
+                "titulo": titulo,
+                "descricao": descricao,
+                "status": "Pendente",
+                "arquivo": {
+                    "path": arquivo_url
+                }
+            }
+        )
 
-        response = xano_request("projetos", method='POST', data=projeto_data)
+        print("Status:", response.status_code)
+        print("Resposta:", response.text)
 
-        if response and 'id' in response:
-            projeto_id = response['id']
+        if response.ok:
+            flash("Projeto enviado com sucesso!", "success")
+        else:
+            flash("Erro ao enviar para o Xano.", "danger")
 
-            # Gera a URL do arquivo com base no projeto_id
-            arquivo_url = url_for('download_projeto', projeto_id=projeto_id, _external=True)
-
-            # Atualiza o projeto com o campo arquivo_url real
-            xano_request(f"projetos/{projeto_id}", method='PUT', data={"arquivo_url": arquivo_url})
-
-        flash("Projeto enviado com sucesso!", "success")
         return redirect(url_for('user_dashboard'))
 
     return render_template("enviar_projeto.html")
 
-
-
+@app.route('/uploads/<filename>')
+def serve_arquivo(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 @app.route('/logout')
 @login_required
